@@ -25,6 +25,6 @@ echo "information of lambda"
 #list of Lambda 
 aws lambda list-functions
 
-echo "information IAM Users"
+echo "information of IAM Users"
 #list of IAM users
 aws iam list-users
