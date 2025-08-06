@@ -5,6 +5,7 @@
 #date:25july
 
 #This Script will shows the usage of aws resource
+REPORT_FILE="/tmp/aws_report_$(date +%F_%H-%M).txt"
 set -x
 ###########
 
@@ -28,3 +29,8 @@ aws lambda list-functions
 echo "information of IAM Users"
 #list of IAM users
 aws iam list-users
+
+} > "$REPORT_FILE" 2>&1
+
+# Send the report by mail
+mail -s "AWS Resources Report - $(date +%F)" mahivellanki557@gmail.com < "$REPORT_FILE"
