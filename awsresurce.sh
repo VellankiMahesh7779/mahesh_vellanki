@@ -6,7 +6,6 @@
 
 #This Script will shows the usage of aws resource
 REPORT_FILE="/tmp/aws_report_$(date +%F_%H-%M).txt"
-{
 set -x
 ###########
 
