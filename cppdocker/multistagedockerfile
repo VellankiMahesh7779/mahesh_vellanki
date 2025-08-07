@@ -1,0 +1,24 @@
+# ---------- Stage 1: Build ----------
+FROM gcc:13 AS builder
+
+# Set working directory
+WORKDIR /maheshapp
+
+# Copy source file
+COPY example_docker.cpp .
+
+# Compile the code
+RUN g++ -o example_docker example_docker.cpp
+
+
+# ---------- Stage 2: Run ----------
+FROM debian:bullseye-slim
+
+# Set working directory
+WORKDIR /maheshapp
+
+# Copy the compiled binary from builder stage
+COPY --from=builder /maheshapp/example_docker .
+
+# Set the entrypoint
+CMD ["./example_docker"]
