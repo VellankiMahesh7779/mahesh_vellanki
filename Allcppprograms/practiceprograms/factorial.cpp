@@ -3,7 +3,7 @@
 using namespace std;
 int main(){
     int n;
-    cout<<"enter number"<<endl;
+    cout<<"maheshenter number"<<endl;
     cin>>n;
     int results = 1;
     for(int i=1;i<=n;i++){
