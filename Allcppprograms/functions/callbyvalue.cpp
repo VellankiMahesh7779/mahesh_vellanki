@@ -7,7 +7,7 @@ void mahesh(int n) {
 }
 
 int main() {
-   i int a = 5;
+    int a = 5;
     cout << a<< " \n";   // 1st output
     mahesh(a);           // Function call (call by value)
     cout << a << endl;   // 3rd output
