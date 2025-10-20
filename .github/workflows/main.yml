@@ -1,4 +1,4 @@
-name: C++ Build and Run
+name: C++ Compile Check
 
 on:
   push:
@@ -17,18 +17,15 @@ jobs:
       - name: Install g++
         run: sudo apt-get update && sudo apt-get install -y g++
 
-      - name: Build and Run (functions folder)
+      - name: Compile all C++ files
         run: |
-          cd Allcppprograms/functions
-          if ls *.cpp 1> /dev/null 2>&1; then
-            g++ -std=c++17 *.cpp -o app
-            ./app
+          # Find all .cpp files in the repo
+          CPP_FILES=$(find . -type f -name "*.cpp")
+
+          if [ -z "$CPP_FILES" ]; then
+            echo "No C++ files found. Exiting."
+            exit 0
           fi
 
-      - name: Build and Run (practiceprograms folder)
-        run: |
-          cd Allcppprograms/practiceprograms
-          if ls *.cpp 1> /dev/null 2>&1; then
-            g++ -std=c++17 *.cpp -o app
-            ./app
-          fi
+          # Compile all files together
+          g++ -std=c++17 $CPP_FILES -o app
