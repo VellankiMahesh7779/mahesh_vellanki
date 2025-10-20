@@ -22,7 +22,7 @@ double add(double a, double b, double c) {
 int main() {
     // Call the add() function with different argument types and counts
 
-    int intResult = add(10, 20)                  // Matches Function 1
+    int intResult = add(10, 20);                  // Matches Function 1
     float floatResult = add(5.5f, 2.3f);            // Matches Function 2
     double doubleResult = add(1.1, 2.2, 3.3);       // Matches Function 3
 

@@ -1,4 +1,4 @@
-name: C++ Compile Check
+name: Build and Run All C++ Programs
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
       - name: Install g++
         run: sudo apt-get update && sudo apt-get install -y g++
 
-      - name: Compile all C++ files
+      - name: Compile and run all independent C++ files
         run: |
           # Find all .cpp files in the repo
           CPP_FILES=$(find . -type f -name "*.cpp")
@@ -27,5 +27,9 @@ jobs:
             exit 0
           fi
 
-          # Compile all files together
-          g++ -std=c++17 $CPP_FILES -o app
+          # Loop through each .cpp file
+          for file in $CPP_FILES; do
+            echo "Compiling and running $file ..."
+            OUTPUT="${file%.*}"   # Output binary has the same name as the file without extension
+            g++ -std=c++17 "$file" -o "$OUTPUT" && ./"$OUTPUT"
+          done
