@@ -17,8 +17,18 @@ jobs:
       - name: Install g++
         run: sudo apt-get update && sudo apt-get install -y g++
 
-      - name: Build C++ files
-        run: g++ -std=c++17 *.cpp -o app
+      - name: Build and Run (functions folder)
+        run: |
+          cd Allcppprograms/functions
+          if ls *.cpp 1> /dev/null 2>&1; then
+            g++ -std=c++17 *.cpp -o app
+            ./app
+          fi
 
-      - name: Run program
-        run: ./app
+      - name: Build and Run (practiceprograms folder)
+        run: |
+          cd Allcppprograms/practiceprograms
+          if ls *.cpp 1> /dev/null 2>&1; then
+            g++ -std=c++17 *.cpp -o app
+            ./app
+          fi
