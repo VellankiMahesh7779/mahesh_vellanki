@@ -1,13 +1,15 @@
-FROM ubuntu:22.04
+# Use an official GCC image to compile and run the C++ code
+FROM gcc:13
 
-# Install g++
-RUN apt-get update && apt-get install -y g++
+# Set working directory in the container
+WORKDIR /maheshapp
 
-WORKDIR /app
-COPY . /app
+# Copy the C++ source file to the container
+COPY example_docker.cpp .
 
-# Compile all cpp files recursively
-RUN g++ -std=c++17 $(find . -type f -name "*.cpp") -o app
+# Compile the C++ source code
+RUN g++ -o example_docker example_docker.cpp
 
-# Run the binary
-CMD ["./app"]
+# Command to run the compiled program
+CMD ["./example_docker"]
+
