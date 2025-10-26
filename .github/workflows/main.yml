@@ -74,6 +74,14 @@ jobs:
           [ -z "$py_files" ] && echo "No Python files." && exit 0
           for f in $py_files; do
             grep -q "if __name__ *== *['\"]__main__['\"]" "$f" || continue
-            echo "🚀 Running $f"
-            python3 "$f"
+            dir=$(dirname "$f")
+            if [ "$dir" = "." ]; then
+              echo "🚀 Running $f"
+              python3 "$f"
+            else
+              # run as module so package-relative imports work
+              mod=$(echo "$f" | sed 's#^\./##; s#\.py$##; s#/#.#g')
+              echo "🚀 Running module $mod (from repo root)"
+              (cd "$(pwd)" && python3 -m "$mod")
+            fi
           done
