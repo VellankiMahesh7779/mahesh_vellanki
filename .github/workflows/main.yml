@@ -1,35 +1,79 @@
-name: Build and Run All C++ Programs
+name: Build and Run C++, Java, and Python
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
   pull_request:
-    branches: [ "main" ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Install g++
-        run: sudo apt-get update && sudo apt-get install -y g++
-
-      - name: Compile and run all independent C++ files
+      - name: Install dependencies
         run: |
-          # Find all .cpp files in the repo
-          CPP_FILES=$(find . -type f -name "*.cpp")
+          sudo apt-get update -y
+          sudo apt-get install -y g++ default-jdk python3 python3-pip
 
-          if [ -z "$CPP_FILES" ]; then
-            echo "No C++ files found. Exiting."
-            exit 0
-          fi
+      - name: Setup Python (if requirements.txt)
+        run: |
+          [ -f requirements.txt ] && pip3 install -r requirements.txt || echo "No Python deps."
 
-          # Loop through each .cpp file
-          for file in $CPP_FILES; do
-            echo "Compiling and running $file ..."
-            OUTPUT="${file%.*}"   # Output binary has the same name as the file without extension
-            g++ -std=c++17 "$file" -o "$OUTPUT" && ./"$OUTPUT"
+      - name: Run C++ programs
+        run: |
+          set -e
+          echo "▶ C++ files check..."
+          cpp_files=$(find . -name "*.cpp" -not -path "./.git/*") || true
+          [ -z "$cpp_files" ] && echo "No C++ files." && exit 0
+          mkdir -p build/cpp
+          for f in $cpp_files; do
+            out="build/cpp/$(basename "$f" .cpp)"
+            echo "⚙️ Compiling $f"
+            g++ -std=c++17 "$f" -o "$out"
+            echo "🚀 Running $out"
+            "$out"
+          done
+
+      - name: Run Java programs (auto add missing packages)
+        run: |
+          set -e
+          echo "▶ Java files check..."
+          java_files=$(find . -name "*.java" -not -path "./.git/*") || true
+          [ -z "$java_files" ] && echo "No Java files." && exit 0
+          mkdir -p build/java temp_java
+          for f in $java_files; do
+            rel=${f#./}; dir=$(dirname "$rel"); dest="temp_java/$rel"
+            mkdir -p "$(dirname "$dest")"
+            if grep -q '^package ' "$f"; then
+              cp "$f" "$dest"
+            elif [ "$dir" != "." ]; then
+              pkg=$(echo "$dir" | tr '/' '.')
+              echo "package $pkg;" > "$dest"; cat "$f" >> "$dest"
+            else
+              cp "$f" "$dest"
+            fi
+          done
+          javac $(find temp_java -name "*.java") -d build/java
+          for f in $(find temp_java -name "*.java"); do
+            grep -q "public static void main" "$f" || continue
+            pkg=$(grep -m1 '^package ' "$f" | sed 's/package \(.*\);/\1/' || true)
+            cls=$(basename "$f" .java)
+            fqcn=${pkg:+$pkg.}$cls
+            echo "🚀 Running $fqcn"
+            (cd build/java && java "$fqcn")
+          done
+
+      - name: Run Python scripts
+        run: |
+          set -e
+          echo "▶ Python files check..."
+          py_files=$(find . -name "*.py" -not -path "./.git/*") || true
+          [ -z "$py_files" ] && echo "No Python files." && exit 0
+          for f in $py_files; do
+            grep -q "if __name__ *== *['\"]__main__['\"]" "$f" || continue
+            echo "🚀 Running $f"
+            python3 "$f"
           done
