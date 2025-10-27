@@ -33,7 +33,7 @@ jobs:
             "$out"
           done
 
-      - name: Run Java programs (auto add missing packages)
+      - name: Run Java programs 
         run: |
           set -e
           echo "▶ Java files check..."
@@ -62,7 +62,7 @@ jobs:
             (cd build/java && java "$fqcn")
           done
 
-      - name: Run Python scripts (from Python folder if available)
+      - name: Run Python scripts 
         run: |
           set -e
           echo "▶ Checking for Python folder..."
