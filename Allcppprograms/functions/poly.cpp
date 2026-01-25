@@ -13,7 +13,7 @@ public:
 };
 
 int main() {
-    Math m;
+    addition m;
     cout << m.add(2, 3) << endl;
     cout << m.add(2.5, 3.5) << endl;
     return 0;
