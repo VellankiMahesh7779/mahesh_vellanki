@@ -163,8 +163,6 @@ Tick ✅ the box once you finish.
 
 
 If a day feels too hard, split 1.5 hrs into 1 hr coding + 0.5 hr reading theory/examples.
-<img width="1267" height="554" alt="image" src="https://github.com/user-attachments/assets/38e8d15a-2583-45a3-943c-520cb2f33019" />
-<img width="345" height="314" alt="image" src="https://github.com/user-attachments/assets/292ecbf2-7d3c-4055-809a-a775ab63e74f" />
 
 
 
