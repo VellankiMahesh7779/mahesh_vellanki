@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-
+// Class demonstrating function overloading
 class addition {
 public:
     int add(int a, int b) {
@@ -11,7 +11,7 @@ public:
         return a + b;
     }
 };
-
+// Main function to demonstrate function overloading
 int main() {
     addition m;
     cout << m.add(2, 3) << endl;
