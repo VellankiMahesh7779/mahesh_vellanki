@@ -44,34 +44,7 @@ CMD ["./functionoverload"]
 # → Runs the compiled program when the container starts.
 #
 # -------------------------------
-# Use official GCC image
-FROM gcc:13
 
-# Set working directory inside container
-WORKDIR /maheshapp
-
-# Copy only the required C++ file into container
-COPY functionoverload.cpp ./
-
-# Compile the C++ source file
-RUN g++ functionoverload.cpp -o functionoverload
-
-# Run the compiled program
-CMD ["./functionoverload"]
-
-# -------------------------------
-# Steps to build and run this Dockerfile:
-#
-# 1. Build the Docker image:
-#    docker build -t functionoverload .
-#
-# 2. Run the container:
-#    docker run functionoverload
-#
-# 3. Run in interactive mode (if input is needed):
-#    docker run -it functionoverload
-# -------------------------------
-#
 # Explanation of each instruction:
 #
 # FROM gcc:13
