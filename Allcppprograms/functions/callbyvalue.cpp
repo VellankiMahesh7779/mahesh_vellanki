@@ -5,7 +5,7 @@ void mahesh(int n) {
     n = 30;
     cout << n<<endl;
 }
-
+//mahesd
 int main() {
     int a = 7;
     cout << a<< " \n";   // 1st output
