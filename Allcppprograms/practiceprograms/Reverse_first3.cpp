@@ -5,7 +5,7 @@ using namespace std;
 int main() {
     string str;
 
-    cout << "Enter a string: ";
+    cout << "Enter a strings: ";
     cin >> str;
 
     if (str.length() >= 3) {
