@@ -1,0 +1,80 @@
+pipeline {
+agent any
+
+```
+stages {
+
+    stage('Checkout Code') {
+        steps {
+            git url: 'https://github.com/VellankiMahesh7779/mahesh_vellanki.git'
+        }
+    }
+
+    stage('Install Dependencies') {
+        steps {
+            sh '''
+                sudo apt-get update
+                sudo apt-get install -y g++ python3 shellcheck
+            '''
+        }
+    }
+
+    stage('Build C++ Files') {
+        steps {
+            sh '''
+                echo "===== Compiling C++ Files ====="
+
+                find . -name "*.cpp" | while read file
+                do
+                    echo "Compiling: $file"
+                    g++ "$file" -o /tmp/$(basename "$file" .cpp) || exit 1
+                done
+            '''
+        }
+    }
+
+    stage('Validate Python Files') {
+        steps {
+            sh '''
+                echo "===== Validating Python Files ====="
+
+                find . -name "*.py" | while read file
+                do
+                    echo "Checking: $file"
+                    python3 -m py_compile "$file" || exit 1
+                done
+            '''
+        }
+    }
+
+    stage('Validate Shell Scripts') {
+        steps {
+            sh '''
+                echo "===== Validating Shell Scripts ====="
+
+                find . -name "*.sh" | while read file
+                do
+                    echo "Checking: $file"
+                    bash -n "$file" || exit 1
+                done
+            '''
+        }
+    }
+}
+
+post {
+    success {
+        echo "✅ All validations passed successfully."
+    }
+
+    failure {
+        echo "❌ Build/Validation failed."
+    }
+
+    always {
+        cleanWs()
+    }
+}
+```
+
+}
