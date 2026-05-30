@@ -9,7 +9,7 @@ void callByValue(int a) {
     cout << "Inside callByValue a = " << a << endl; // Print the modified value of 'a'
 }
 
-// 2. Call by Reference: Function receives a reference to the argument
+// 2. Call by Reference:  Function receives a reference to the argument
 void callByReference(int &b) {
     b = b + 10; // Mosdify the original variable 'b' via reference
     cout << "Inside callByReference b = " << b << endl; // Print the modified value of 'b'
