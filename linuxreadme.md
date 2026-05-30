@@ -6,7 +6,7 @@ It is widely used in servers, DevOps, cloud, networking, containers.
 
 Everything in Linux is treated as a file (hardware, processes, configs).
 
-Structure:
+Structure: 
 
 /bin → basic commands (ls, cp, mv)
 
