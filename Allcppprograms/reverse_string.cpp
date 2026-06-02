@@ -4,7 +4,7 @@ using namespace std;
 int main() {
     string str;
     
-    cout << "Enter a string: ";
+    cout << "Enter a string1: ";
     cin >> str;
 
     string rev = "";
@@ -13,7 +13,7 @@ int main() {
         rev += str[i];
     }
 
-    cout << "Reversed string: " << rev << endl;
+    cout << "Reversed string1: " << rev << endl;
 
     return 0;
 }
