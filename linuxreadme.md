@@ -1,5 +1,5 @@
 1. 🐧 Linux Introduction
-
+2. 
 Linux is an open-source operating system similar to Unix.
 
 It is widely used in servers, DevOps, cloud, networking, containers.
